@@ -24,7 +24,7 @@ const createQuote = async (req: Request, res: Response) => {
 const findQuote = async (req: Request, res: Response) => {
     try {
         const result = await repository.findQuoteById(req.params.quoteId);
-        if (result) return res.json({result});
+        if (result) return res.json(result);
         return res.status(404).json({message: "Not found"});
     } catch (err) {
         return res.status(500).json({err: (err as Error).message});
@@ -34,7 +34,7 @@ const findQuote = async (req: Request, res: Response) => {
 const randomQuote = async (_: Request, res: Response) => {
     try {
         const quote = await repository.getRandomQuote();
-        return res.json({quote});
+        return res.json(quote);
     } catch (err) {
         return res.status(500).json({err: (err as Error).message});
     }
@@ -49,7 +49,7 @@ const randomQuotes = async (req: Request, res: Response) => {
         }
         if (!quotes) return res.status(404).json({err: "No Quotes Found"});
 
-        return res.json({quotes});
+        return res.json(quotes);
     } catch (err) {
         return res.status(500).json({err: (err as Error).message});
     }
@@ -58,7 +58,7 @@ const randomQuotes = async (req: Request, res: Response) => {
 const readAll = async (_: Request, res: Response) => {
     try {
         const quotes = await repository.getAllQuotes();
-        return res.json({quotes});
+        return res.json(quotes);
     } catch (err) {
         return res.status(500).json({err: (err as Error).message});
     }
@@ -74,7 +74,7 @@ const updateQuote = async (req: Request, res: Response) => {
                 body,
             })
         );
-        if (_res) return res.status(204).json({_res});
+        if (_res) return res.status(204).json(_res);
         return res.status(404).json({message: "Quote not found."});
     } catch (err) {
         return res.status(500).json({err: (err as Error).message});
